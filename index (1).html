@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- EDIT: the text shown on the browser tab and in Google results -->
+  <title>Your Name | Marketing, Finance & Fashion</title>
+  <meta name="description" content="Portfolio of Your Name: case studies in marketing, finance, and fashion.">
+
+  <!-- Remembers light/dark choice before the page draws, so there is no flash -->
+  <script>
+    (function () {
+      var theme = null;
+      try { theme = localStorage.getItem("theme"); } catch (e) {}
+      if (!theme) {
+        theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      }
+      document.documentElement.setAttribute("data-theme", theme);
+    })();
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,500;1,6..96,500&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    /* ---------- COLORS: change these to restyle the whole site ---------- */
+    :root {
+      --paper: #F6F6F9;   /* page background */
+      --ink: #14141F;     /* main text */
+      --muted: #5B5B70;   /* secondary text */
+      --cobalt: #2B3FD6;  /* accent: links and highlights */
+      --mist: #D9DBE8;    /* thin lines */
+      --band-bg: #14141F; /* contact section background */
+      --band-text: #F6F6F9;
+      --band-muted: #C9CADB;
+      --serif: "Bodoni Moda", "Didot", Georgia, serif;
+      --sans: "Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+      color-scheme: light;
+    }
+    /* Dark mode colors */
+    :root[data-theme="dark"] {
+      --paper: #12121A;
+      --ink: #ECECF4;
+      --muted: #A3A4BA;
+      --cobalt: #9AA6FF;
+      --mist: #2E2F44;
+      --band-bg: #1B1B2A;
+      --band-text: #ECECF4;
+      --band-muted: #A3A4BA;
+      color-scheme: dark;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-size: 1.0625rem;
+      line-height: 1.6;
+    }
+
+    a { color: var(--cobalt); text-underline-offset: 3px; }
+    a:focus-visible, button:focus-visible, summary:focus-visible { outline: 3px solid var(--cobalt); outline-offset: 3px; }
+    button { font: inherit; color: inherit; cursor: pointer; }
+
+    .wrap { max-width: 62rem; margin: 0 auto; padding: 0 1.5rem; }
+    .stitch { border: 0; border-top: 2px dashed var(--mist); margin: 0; }
+
+    /* ---------- Top navigation ---------- */
+    nav { padding: 1.5rem 0; }
+    nav .wrap { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; flex-wrap: wrap; }
+    nav .mark { font-family: var(--serif); font-size: 1.25rem; color: var(--ink); text-decoration: none; }
+    nav ul { list-style: none; display: flex; gap: 1.5rem; margin: 0; padding: 0; align-items: baseline; }
+    nav ul a { color: var(--ink); text-decoration: none; font-weight: 500; }
+    nav ul a:hover { color: var(--cobalt); text-decoration: underline; }
+    .theme-toggle { background: none; border: 0; padding: 0; font-weight: 500; }
+    .theme-toggle:hover { color: var(--cobalt); text-decoration: underline; text-underline-offset: 3px; }
+
+    /* ---------- Hero ---------- */
+    .hero { padding: 4rem 0 3.5rem; }
+    .hero h1 {
+      font-family: var(--serif);
+      font-weight: 500;
+      font-size: clamp(3rem, 10vw, 7rem);
+      line-height: 0.98;
+      letter-spacing: -0.02em;
+      margin: 0 0 1.5rem;
+    }
+    .hero .intro { font-size: 1.25rem; max-width: 36rem; color: var(--muted); margin: 0 0 2.5rem; }
+
+    /* Three disciplines: these are buttons that filter your work */
+    .tags { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 2px dashed var(--mist); }
+    .tags button {
+      background: none; border: 0; border-right: 2px dashed var(--mist);
+      padding: 1rem 1rem; text-align: left;
+    }
+    .tags button:first-child { padding-left: 0; }
+    .tags button:last-child { border-right: 0; }
+    .tags strong { display: block; font-family: var(--serif); font-size: 1.5rem; font-weight: 500; }
+    .tags span { color: var(--muted); font-size: 0.95rem; display: block; }
+    .tags button:hover strong { color: var(--cobalt); text-decoration: underline; text-underline-offset: 4px; }
+    .hint { color: var(--muted); font-size: 0.95rem; margin: 0.75rem 0 0; }
+
+    /* ---------- Sections ---------- */
+    section { padding: 4rem 0; }
+    h2 { font-family: var(--serif); font-weight: 500; font-size: 2.25rem; margin: 0 0 1.5rem; }
+
+    /* ---------- Filter buttons ---------- */
+    .filters { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0 0 2rem; }
+    .filters button {
+      background: none; border: 2px solid var(--mist); padding: 0.35rem 1rem; font-weight: 500;
+    }
+    .filters button:hover { border-color: var(--cobalt); }
+    .filters button[aria-pressed="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+
+    /* ---------- Case studies ---------- */
+    .cases { border-bottom: 2px dashed var(--mist); }
+    .case { padding: 2rem 0; border-top: 2px dashed var(--mist); display: grid; grid-template-columns: 11rem 1fr; gap: 1.5rem; }
+    .case[hidden] { display: none; }
+    .case .kind { color: var(--cobalt); font-weight: 600; font-size: 0.95rem; }
+    .case .when { color: var(--muted); font-size: 0.95rem; }
+    .case h3 { font-family: var(--serif); font-weight: 500; font-size: 1.6rem; line-height: 1.2; margin: 0 0 0.75rem; }
+    .case p { margin: 0 0 0.75rem; max-width: 40rem; }
+    .empty { padding: 2rem 0; color: var(--muted); border-top: 2px dashed var(--mist); margin: 0; }
+    .empty[hidden] { display: none; }
+
+    /* Click-to-expand details */
+    details { margin-top: 0.5rem; }
+    summary { cursor: pointer; color: var(--cobalt); font-weight: 600; list-style: none; width: fit-content; }
+    summary::-webkit-details-marker { display: none; }
+    summary::before { content: "+"; display: inline-block; width: 1.25rem; }
+    details[open] summary::before { content: "\2212"; }
+    details dl { margin: 1rem 0 0; display: grid; grid-template-columns: 7rem 1fr; gap: 0.35rem 1rem; max-width: 40rem; }
+    details dt { font-weight: 600; }
+    details dd { margin: 0; color: var(--muted); }
+    details .more { margin-top: 1rem; }
+
+    /* ---------- About ---------- */
+    .about { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
+    .about p { margin: 0 0 1rem; max-width: 34rem; }
+    .about ul { margin: 0; padding: 0; list-style: none; }
+    .about li { padding: 0.6rem 0; border-top: 2px dashed var(--mist); }
+    .about li:last-child { border-bottom: 2px dashed var(--mist); }
+    .about li span { color: var(--muted); display: block; font-size: 0.95rem; }
+
+    /* ---------- Contact ---------- */
+    .contact { background: var(--band-bg); color: var(--band-text); }
+    .contact h2 { margin-bottom: 1rem; }
+    .contact p { max-width: 32rem; color: var(--band-muted); margin: 0 0 1.5rem; }
+    .contact a { color: var(--band-text); }
+    .contact a:focus-visible, .contact button:focus-visible { outline-color: var(--band-text); }
+    .email-row { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+    .email-row a { font-size: 1.25rem; font-weight: 500; }
+    #copy-email { background: none; border: 2px solid var(--band-muted); color: var(--band-text); padding: 0.25rem 0.9rem; }
+    #copy-email:hover { border-color: var(--band-text); }
+    .contact .links { margin-top: 1.5rem; display: flex; gap: 1.5rem; flex-wrap: wrap; }
+    .contact .links a { font-size: 1rem; color: var(--band-muted); }
+
+    footer { padding: 1.5rem 0; color: var(--muted); font-size: 0.9rem; }
+
+    /* ---------- Phones and small screens ---------- */
+    @media (max-width: 40rem) {
+      .tags { grid-template-columns: 1fr; }
+      .tags button, .tags button:first-child { padding: 0.9rem 0; border-right: 0; border-bottom: 2px dashed var(--mist); }
+      .tags button:last-child { border-bottom: 0; }
+      .case { grid-template-columns: 1fr; gap: 0.5rem; }
+      details dl { grid-template-columns: 1fr; }
+      details dt { margin-top: 0.5rem; }
+      .about { grid-template-columns: 1fr; gap: 2rem; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav>
+    <div class="wrap">
+      <!-- EDIT: your name (short version) -->
+      <a class="mark" href="#top">Your Name</a>
+      <ul>
+        <li><a href="#work">Work</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><button class="theme-toggle" id="theme-toggle" type="button">Dark mode</button></li>
+      </ul>
+    </div>
+  </nav>
+
+  <header class="hero" id="top">
+    <div class="wrap">
+      <!-- EDIT: your full name -->
+      <h1>Your Name</h1>
+
+      <!-- EDIT: one or two sentences about who you are and what you want to do -->
+      <p class="intro">
+        Recent graduate combining marketing, finance, and fashion to help brands
+        make decisions that are as sound as they are stylish.
+      </p>
+
+      <!--
+        EDIT: your three areas. Keep data-filter in lowercase and make sure it matches
+        the data-tags on your case studies and the filter buttons below.
+      -->
+      <div class="tags">
+        <button type="button" data-filter="marketing"><strong>Marketing</strong><span>Brand strategy, campaigns, consumer insight</span></button>
+        <button type="button" data-filter="finance"><strong>Finance</strong><span>Analysis, budgeting, valuation</span></button>
+        <button type="button" data-filter="fashion"><strong>Fashion</strong><span>Merchandising, trends, retail</span></button>
+      </div>
+      <p class="hint">Select an area to see related work.</p>
+    </div>
+  </header>
+
+  <section id="work">
+    <div class="wrap">
+      <h2>Selected work</h2>
+
+      <!-- Filter buttons. If you rename an area, change data-filter here too. -->
+      <div class="filters" id="filters">
+        <button type="button" data-filter="all" aria-pressed="true">All</button>
+        <button type="button" data-filter="marketing" aria-pressed="false">Marketing</button>
+        <button type="button" data-filter="finance" aria-pressed="false">Finance</button>
+        <button type="button" data-filter="fashion" aria-pressed="false">Fashion</button>
+      </div>
+
+      <div class="cases">
+
+        <!--
+          EACH CASE STUDY IS ONE BLOCK LIKE THE ONE BELOW.
+          To add one: copy from <article class="case" ...> to </article> and paste it after.
+          To remove one: delete the whole block.
+          data-tags says which filters it appears under. Use lowercase words
+          separated by spaces, e.g. data-tags="marketing finance".
+        -->
+
+        <article class="case" data-tags="marketing finance">
+          <div>
+            <div class="kind">Internship</div>
+            <!-- EDIT: company and dates -->
+            <div class="when">Company Name, Summer 2026</div>
+          </div>
+          <div>
+            <!-- EDIT: a title that says what you did -->
+            <h3>Case study title: what you worked on</h3>
+            <!-- EDIT: 1 to 2 sentences, the short version visitors see first -->
+            <p>Describe the situation in plain language. What was the company trying to do?</p>
+            <details>
+              <summary>Read the details</summary>
+              <dl>
+                <dt>Challenge</dt><dd>What problem needed solving?</dd>
+                <dt>My role</dt><dd>What did you personally do? (research, analysis, design, presenting)</dd>
+                <dt>Result</dt><dd>What happened? Add real numbers if you are allowed to share them.</dd>
+              </dl>
+            </details>
+          </div>
+        </article>
+
+        <article class="case" data-tags="finance">
+          <div>
+            <div class="kind">Class project</div>
+            <div class="when">Course name, Spring 2026</div>
+          </div>
+          <div>
+            <h3>Case study title: what you worked on</h3>
+            <p>Describe the project in one or two sentences.</p>
+            <details>
+              <summary>Read the details</summary>
+              <dl>
+                <dt>Challenge</dt><dd>What problem needed solving?</dd>
+                <dt>My role</dt><dd>What did you personally do?</dd>
+                <dt>Result</dt><dd>What did you find or recommend?</dd>
+              </dl>
+              <!-- EDIT: replace # with a link to your PDF or slides, or delete this line -->
+              <p class="more"><a href="#">Read the full case study</a></p>
+            </details>
+          </div>
+        </article>
+
+        <article class="case" data-tags="fashion marketing">
+          <div>
+            <div class="kind">Class project</div>
+            <div class="when">Course name, Fall 2025</div>
+          </div>
+          <div>
+            <h3>Case study title: what you worked on</h3>
+            <p>Describe the project in one or two sentences.</p>
+            <details>
+              <summary>Read the details</summary>
+              <dl>
+                <dt>Challenge</dt><dd>What problem needed solving?</dd>
+                <dt>My role</dt><dd>What did you personally do?</dd>
+                <dt>Result</dt><dd>What did you find or recommend?</dd>
+              </dl>
+            </details>
+          </div>
+        </article>
+
+        <p class="empty" id="empty" hidden>No case studies in this area yet.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="stitch">
+
+  <section id="about">
+    <div class="wrap">
+      <h2>About</h2>
+      <div class="about">
+        <div>
+          <!-- EDIT: write in first person, 2 or 3 short paragraphs -->
+          <p>
+            Tell your story briefly: what you studied, what drew you to
+            combining marketing, finance, and fashion, and what you want to
+            do next.
+          </p>
+          <p>Mention what you are looking for, such as a role, an industry, or a city.</p>
+        </div>
+        <ul>
+          <!-- EDIT: education, skills, tools, whatever is useful to a recruiter -->
+          <li>Your University<span>B.S. in Marketing, minor in Finance, 2026</span></li>
+          <li>Skills<span>Market research, financial modeling, trend forecasting</span></li>
+          <li>Tools<span>Excel, PowerPoint, Canva, Google Analytics</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <div class="wrap">
+      <h2>Contact</h2>
+      <p>Hiring, or want to talk about a project? Send me an email.</p>
+      <div class="email-row">
+        <!-- EDIT: your email address (in both places on this line) -->
+        <a id="email-link" href="mailto:you@example.com">you@example.com</a>
+        <button id="copy-email" type="button">Copy email</button>
+        <span id="copy-status" role="status" aria-live="polite"></span>
+      </div>
+      <div class="links">
+        <!-- EDIT: your LinkedIn URL. Delete any line you do not need. -->
+        <a href="https://www.linkedin.com/in/your-profile">LinkedIn</a>
+        <a href="#">Résumé (PDF)</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <!-- EDIT: your name and year -->
+      &copy; 2026 Your Name
+    </div>
+  </footer>
+
+  <script>
+    /* ---------- Filtering case studies ---------- */
+    var cases = document.querySelectorAll(".case");
+    var filterButtons = document.querySelectorAll("#filters button");
+    var emptyMessage = document.getElementById("empty");
+
+    function applyFilter(name) {
+      var visible = 0;
+      cases.forEach(function (c) {
+        var tags = c.getAttribute("data-tags").split(" ");
+        var show = name === "all" || tags.indexOf(name) !== -1;
+        c.hidden = !show;
+        if (show) visible++;
+      });
+      filterButtons.forEach(function (b) {
+        b.setAttribute("aria-pressed", b.getAttribute("data-filter") === name ? "true" : "false");
+      });
+      emptyMessage.hidden = visible > 0;
+    }
+
+    // Filter buttons in the work section
+    filterButtons.forEach(function (b) {
+      b.addEventListener("click", function () { applyFilter(b.getAttribute("data-filter")); });
+    });
+
+    // Big area buttons in the hero: filter, then scroll down to the work
+    document.querySelectorAll(".tags button").forEach(function (b) {
+      b.addEventListener("click", function () {
+        applyFilter(b.getAttribute("data-filter"));
+        document.getElementById("work").scrollIntoView();
+      });
+    });
+
+    /* ---------- Dark mode toggle ---------- */
+    var root = document.documentElement;
+    var toggle = document.getElementById("theme-toggle");
+
+    function updateToggleLabel() {
+      toggle.textContent = root.getAttribute("data-theme") === "dark" ? "Light mode" : "Dark mode";
+    }
+    updateToggleLabel();
+
+    toggle.addEventListener("click", function () {
+      var next = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
+      root.setAttribute("data-theme", next);
+      try { localStorage.setItem("theme", next); } catch (e) {}
+      updateToggleLabel();
+    });
+
+    /* ---------- Copy email ---------- */
+    var copyButton = document.getElementById("copy-email");
+    var copyStatus = document.getElementById("copy-status");
+    var emailText = document.getElementById("email-link").textContent;
+
+    copyButton.addEventListener("click", function () {
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(emailText).then(function () {
+          copyStatus.textContent = "Copied";
+        }, function () {
+          copyStatus.textContent = "Copy failed. Select the address instead.";
+        });
+      } else {
+        copyStatus.textContent = "Copy not supported. Select the address instead.";
+      }
+      setTimeout(function () { copyStatus.textContent = ""; }, 2500);
+    });
+  </script>
+</body>
+</html>
